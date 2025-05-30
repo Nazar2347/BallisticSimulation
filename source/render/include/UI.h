@@ -92,6 +92,7 @@ public:
 			slowMotion = true;
 			timeScale = 0.0f;
 		}
+		
 	}
 	
 	void DrawObjectData(const RenderBullet & bullet) const
@@ -100,7 +101,7 @@ public:
 		//X:
 		DrawText("x: ", horizontalData.x - 20, horizontalData.y, 16, DARKGRAY);
 		DrawRectangle(horizontalData.x, horizontalData.y, horizontalData.width, horizontalData.height, LIGHTGRAY);
-		string xCoordinate = to_string(bullet.getPostition().x+4);
+		string xCoordinate = to_string(bullet.getPostition().x);
 		xCoordinate.resize(4);
 		const char *bufferX = xCoordinate.c_str();
 		DrawText(bufferX, horizontalData.x+5, horizontalData.y+4, 14, DARKGRAY);

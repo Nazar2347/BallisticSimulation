@@ -2,44 +2,56 @@
 
 
 
+
 void DrawGridWithLabelsMeters(float pixelsPerMeter, Color majorLineColor, Color labelColor)
 {
-    int screenWidth = graphArea.width + graphArea.x;
-    int screenHeight = graphArea.height +graphArea.y;
-    int fontSize = 5;
+    int fontSize = 10;
 
     const int majorStepMeters = 50;
     const int minorStepMeters = 10;
 
-    int majorSpacing = (int)(pixelsPerMeter * majorStepMeters);
-    int minorSpacing = (int)(pixelsPerMeter * minorStepMeters);
-
     Color minorLineColor = Fade(majorLineColor, 0.3f);  // lighter color for sub-lines
 
-    // Minor vertical lines (every 10m)
-    for (int x = 0; x <= screenWidth; x += minorSpacing) {
-        DrawLine(x, 0, x, screenHeight, minorLineColor);
+    // Calculate visible world bounds (in meters)
+    float leftMeters = 0.0f;
+    float rightMeters = graphArea.width / pixelsPerMeter;
+    float bottomMeters = 0.0f;
+    float topMeters = graphArea.height / pixelsPerMeter;
+
+    // Start drawing from the nearest lower multiple of step
+    int startXMeters = (int)(leftMeters / minorStepMeters) * minorStepMeters;
+    int endXMeters = (int)(rightMeters / minorStepMeters + 1) * minorStepMeters;
+
+    int startYMeters = (int)(bottomMeters / minorStepMeters) * minorStepMeters;
+    int endYMeters = (int)(topMeters / minorStepMeters + 1) * minorStepMeters;
+
+    // Minor vertical lines
+    for (int xMeters = startXMeters; xMeters <= endXMeters; xMeters += minorStepMeters) {
+        float xPixel = graphArea.x + xMeters * pixelsPerMeter;
+        DrawLine((int)xPixel, graphArea.y, (int)xPixel, graphArea.y + graphArea.height, minorLineColor);
     }
 
-    // Minor horizontal lines (every 10m)
-    for (int y = 0; y <= screenHeight; y += minorSpacing) {
-        DrawLine(0, y, screenWidth, y, minorLineColor);
+    // Minor horizontal lines
+    for (int yMeters = startYMeters; yMeters <= endYMeters; yMeters += minorStepMeters) {
+        float yPixel = graphArea.y + graphArea.height - yMeters * pixelsPerMeter; // invert Y
+        DrawLine((int)graphArea.x, (int)yPixel, (int)(graphArea.x + graphArea.width), (int)yPixel, minorLineColor);
     }
 
-    // Major horizontal lines + labels (every 50m)
-    for (int x = 0; x <= screenWidth; x += majorSpacing) {
-        DrawLine(x, 0, x, screenHeight, majorLineColor);
-        int metersX = (int)(x / pixelsPerMeter);
-        DrawText(TextFormat("%dm", metersX),x, 20, fontSize, labelColor);
+    // Major vertical lines + labels
+    for (int xMeters = startXMeters; xMeters <= endXMeters; xMeters += majorStepMeters) {
+        float xPixel = graphArea.x + xMeters * pixelsPerMeter;
+        DrawLine((int)xPixel, graphArea.y, (int)xPixel, graphArea.y + graphArea.height, majorLineColor);
+        DrawText(TextFormat("%dm", xMeters), (int)xPixel + 2, graphArea.y + 5, fontSize, labelColor);
     }
 
-    // Major vertical lines + labels (every 50m)
-    for (int y = 0; y <= screenHeight; y += majorSpacing) {
-        DrawLine(0, screenHeight - y, screenWidth, screenHeight - y, majorLineColor);
-        int metersY = (int)(y / pixelsPerMeter);
-        DrawText(TextFormat("%dm", metersY), 20, screenHeight -y , fontSize, labelColor);
+    // Major horizontal lines + labels
+    for (int yMeters = startYMeters; yMeters <= endYMeters; yMeters += majorStepMeters) {
+        float yPixel = graphArea.y + graphArea.height - yMeters * pixelsPerMeter;
+        DrawLine((int)graphArea.x, (int)yPixel, (int)(graphArea.x + graphArea.width), (int)yPixel, majorLineColor);
+        DrawText(TextFormat("%dm", yMeters), graphArea.x + 5, (int)yPixel - fontSize / 2, fontSize, labelColor);
     }
 }
+
 
 void AdjustZoom(float& pixelsPerMeter, float zoomAmount)
 {
@@ -54,7 +66,7 @@ void AdjustZoom(float& pixelsPerMeter, float zoomAmount)
 
 void HandleZoomInput(float& pixelsPerMeter)
 {
-    float zoomStep = 0.5f;
+    float zoomStep = 0.1f;
 
     // Mouse wheel zoom
     int wheelMove = GetMouseWheelMove();

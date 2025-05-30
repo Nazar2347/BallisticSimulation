@@ -31,6 +31,7 @@ int main() {
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        //Draw graph
         BeginScissorMode(graphArea.x, 
             graphArea.y, 
             graphArea.width, 
@@ -44,14 +45,15 @@ int main() {
             menu.setFireRequested(false);
         }
 
-        DrawGridWithLabelsMeters(pixelPerMeter, LIGHTGRAY, DARKGRAY);
 
         rbullet1.setPosition(deltaTime); // Trajectory 
+        DrawGridWithLabelsMeters(pixelPerMeter, LIGHTGRAY, DARKGRAY); //Draw grid
 
         DrawCircleV({ graphArea.x, graphArea.y + graphArea.height }, 5, BLUE); // (0,0)
         rbullet1.renderObject(pixelPerMeter); // Draw Bullet
         rbullet1.renderTrail(pixelPerMeter); //Draw trajectory
         EndScissorMode();
+        //Finish draw graph
 
         menu.DrawUIPanel();
         menu.DrawAngleInput();
