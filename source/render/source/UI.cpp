@@ -72,7 +72,7 @@ void MainUI::DrawTimeScaleToggle(float& timeScale)
 
 }
 
-void MainUI::DrawObjectData(const RenderBullet& bullet) const
+void MainUI::DrawObjectData(const RenderObject& bullet) const
 {
 	Rectangle horizontalData = { toolPanel.x - 250, toolPanel.y + 5, 50, 20 };
 	//X:

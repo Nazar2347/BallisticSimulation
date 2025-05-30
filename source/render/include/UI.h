@@ -44,7 +44,7 @@ public:
 	
 	void DrawGridWithLabelsMeters(float pixelsPerMeter, Color lineColor, Color labelColor);
 
-	void DrawObjectData(const RenderBullet& bullet) const;
+	void DrawObjectData(const RenderObject& bullet) const;
 	//getters
 	bool getFireRequested()const;
 	void setFireRequested(bool fireRequested);

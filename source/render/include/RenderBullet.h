@@ -4,7 +4,7 @@
 #include "PhysicsConstants.h"
 #include "vector"
 #include "VisualUtilities.h"
-class RenderBullet
+class RenderObject
 {
 private: 
 	Bullet* bullet_;
@@ -12,7 +12,7 @@ private:
 	vector<Vector> trail_;
 	float t_ = 0.0f;
 public:
-	RenderBullet(Bullet * bullet);
+	RenderObject(Bullet * bullet);
 	Bullet* getBullet()const ;
 	Vector getPostition()const;
 	float getCurrentTime() const;

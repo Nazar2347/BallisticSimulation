@@ -20,7 +20,7 @@ int main() {
     
     Bullet* bullet1 = new Bullet(400.0f, 45.0f, "Pistol_bullet");
 
-    RenderBullet rbullet1(bullet1);
+    RenderObject rbullet1(bullet1);
 
     //std::vector<Vec2> trail;
 
@@ -41,7 +41,7 @@ int main() {
         {
             delete bullet1;
             bullet1 = new Bullet(menu.getUserVelocity(), menu.getUserAngle(), "UserBullet");
-            rbullet1 = RenderBullet(bullet1);
+            rbullet1 = RenderObject(bullet1);
             menu.setFireRequested(false);
         }
 
