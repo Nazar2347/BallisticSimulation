@@ -78,11 +78,19 @@ public:
 		}
 
 		Rectangle buttonSlowedSpeed(toolPanel.x -100, toolPanel.y + 20, 60, 30);
-		const char* slowLabel = "Slow";
+		const char* slowLabel = "Speed Slow";
 		if (GuiButton(buttonSlowedSpeed, slowLabel))
 		{
 			slowMotion = true;
 			timeScale = 0.1f;
+		}
+
+		Rectangle buttonPauseSpeed(toolPanel.x-30 , toolPanel.y + 20, 20, 30);
+		const char* pauseLabel = "||";
+		if (GuiButton(buttonPauseSpeed, pauseLabel))
+		{
+			slowMotion = true;
+			timeScale = 0.0f;
 		}
 	}
 	
@@ -92,12 +100,12 @@ public:
 		//X:
 		DrawText("x: ", horizontalData.x - 20, horizontalData.y, 16, DARKGRAY);
 		DrawRectangle(horizontalData.x, horizontalData.y, horizontalData.width, horizontalData.height, LIGHTGRAY);
-		string xCoordinate = to_string(bullet.getPostition().x);
+		string xCoordinate = to_string(bullet.getPostition().x+4);
 		xCoordinate.resize(4);
 		const char *bufferX = xCoordinate.c_str();
 		DrawText(bufferX, horizontalData.x+5, horizontalData.y+4, 14, DARKGRAY);
 		
-
+		// Y: 
 		DrawText("y: ", horizontalData.x - 20, horizontalData.y+25, 16, GRAY);
 		DrawRectangle(horizontalData.x, horizontalData.y+25, horizontalData.width, horizontalData.height, LIGHTGRAY);
 		string yCoordinate = to_string(bullet.getPostition().y);
