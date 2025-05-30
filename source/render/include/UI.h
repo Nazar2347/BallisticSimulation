@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "raygui.h"
 #include "VisualUtilities.h"
+#include "string"
 
 
 class MainUI
@@ -65,7 +66,7 @@ public:
 			fireRequested_ = true;
 		}
 	}
-	//Spped button
+	//Speed button
 	void DrawTimeScaleToggle(float &timeScale)
 	{
 		Rectangle buttonNormalSpeed = { toolPanel.x, toolPanel.y + 20, 80, 30 };
@@ -85,18 +86,26 @@ public:
 		}
 	}
 	
-	void DrawObjectData(RenderBullet &rbullet) const
+	void DrawObjectData(const RenderBullet & bullet) const
 	{
 		Rectangle horizontalData = { toolPanel.x -250, toolPanel.y + 5, 50, 20 };
 		//X:
 		DrawText("x: ", horizontalData.x - 20, horizontalData.y, 16, DARKGRAY);
 		DrawRectangle(horizontalData.x, horizontalData.y, horizontalData.width, horizontalData.height, LIGHTGRAY);
-		char buffer[10];
-		std::snprintf(buffer, sizeof(buffer), "x = %.2f, y = %.2f", rbullet.getPostition().x);
-		DrawText(buffer,horizontalData.x, horizontalData.y, 14, DARKGRAY);
-		DrawText("y: ", horizontalData.x - 20, horizontalData.y, 16, DARKGRAY);
-		DrawRectangle(horizontalData.x, horizontalData.y, horizontalData.width, horizontalData.height, LIGHTGRAY);
+		string xCoordinate = to_string(bullet.getPostition().x);
+		xCoordinate.resize(4);
+		const char *bufferX = xCoordinate.c_str();
+		DrawText(bufferX, horizontalData.x+5, horizontalData.y+4, 14, DARKGRAY);
+		
+
+		DrawText("y: ", horizontalData.x - 20, horizontalData.y+25, 16, GRAY);
+		DrawRectangle(horizontalData.x, horizontalData.y+25, horizontalData.width, horizontalData.height, LIGHTGRAY);
+		string yCoordinate = to_string(bullet.getPostition().y);
+		yCoordinate.resize(4);
+		const char* bufferY = yCoordinate.c_str();
+		DrawText(bufferY, horizontalData.x+5, horizontalData.y+29, 14, DARKGRAY);
 	}
+
 	bool getFireRequested()
 	{
 		return fireRequested_;
