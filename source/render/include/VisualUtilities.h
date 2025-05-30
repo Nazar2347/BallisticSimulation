@@ -12,6 +12,5 @@ static const Rectangle toolPanel = { 300, 320 , 100, 200 };
 static float timeScale = 1.0f;
 static bool slowMotion = false;
 
-void DrawGridWithLabelsMeters(float pixelsPerMeter, Color lineColor, Color labelColor);
 void HandleZoomInput(float& pixelsPerMeter);
 void AdjustZoom(float& pixelsPerMeter, float zoomAmount);

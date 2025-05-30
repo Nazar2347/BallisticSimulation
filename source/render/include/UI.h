@@ -42,6 +42,8 @@ public:
 	//Speed button
 	void DrawTimeScaleToggle(float& timeScale);
 	
+	void DrawGridWithLabelsMeters(float pixelsPerMeter, Color lineColor, Color labelColor);
+
 	void DrawObjectData(const RenderBullet& bullet) const;
 	//getters
 	bool getFireRequested()const;

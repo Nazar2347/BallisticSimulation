@@ -47,7 +47,7 @@ int main() {
 
 
         rbullet1.setPosition(deltaTime); // Trajectory 
-        DrawGridWithLabelsMeters(pixelPerMeter, LIGHTGRAY, DARKGRAY); //Draw grid
+        menu.DrawGridWithLabelsMeters(pixelPerMeter, LIGHTGRAY, DARKGRAY); //Draw grid
 
         DrawCircleV({ graphArea.x, graphArea.y + graphArea.height }, 5, BLUE); // (0,0)
         rbullet1.renderObject(pixelPerMeter); // Draw Bullet
