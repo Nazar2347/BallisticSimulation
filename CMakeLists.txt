@@ -9,3 +9,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(./source/AppMain)
 add_subdirectory(./source/render)
 add_subdirectory(./source/core)
+
+install (TARGETS mainExecutable
+	RUNTIME DESTINATION bin
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+)
