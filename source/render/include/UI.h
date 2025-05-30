@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "raygui.h"
 #include "VisualUtilities.h"
+#include "RenderBullet.h"
 #include "string"
 
 
@@ -9,127 +10,43 @@ class MainUI
 {
 
 private:
-	float userVelocity_ = 500.0f;
-	float userAngle_ = 45.0f;
+	float userVelocity_;
+	float userAngle_;
 
+	char velocityInput_[6] = "400";
+	char angleInput_[4] = "45";
 
-	char velocityInput[6] = "500";
-	char angleInput[4] = "45";
+	bool fireRequested_;
 
-	bool fireRequested_ = false;
-
-	bool velocityEditMode = false;
-	bool angleEditMode = false;
+	bool velocityEditMode_;
+	bool angleEditMode_;
 
 public:
-	void DrawUIPanel()
+	MainUI()
 	{
-		DrawRectangleRec(uiPanel, LIGHTGRAY);
-		DrawText("Input Parameters",
-			uiPanel.x + 10,
-			uiPanel.y + 10,
-			20,
-			DARKGRAY);
+	 userVelocity_ = 400.0f;
+	 userAngle_ = 45.0f;
+
+	 fireRequested_ = false;
+
+	 velocityEditMode_ = false;
+	 angleEditMode_ = false;
 	}
+	void DrawUIPanel();
 
 	// Velocity
-	void DrawVelocityInput()
-	{
-		Rectangle v0Field = {uiPanel.x + 100, uiPanel.y + 50, 100, 30};
-		GuiTextBox(v0Field, velocityInput, 6, velocityEditMode);
-		DrawText("v0 = ", v0Field.x - 30, v0Field.y + 10, 16, DARKGRAY);
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		{
-			velocityEditMode = CheckCollisionPointRec(GetMousePosition(), v0Field);
-			
-		}
-
-	}
-	void DrawAngleInput()
-	{
-		Rectangle angleField = {uiPanel.x+100, uiPanel.y +100, 100, 30};
-		GuiTextBox( angleField, angleInput, 4, angleEditMode);
-		DrawText("angle = ", angleField.x - 50, angleField.y + 10, 14, DARKGRAY);
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) 
-		{
-			angleEditMode = CheckCollisionPointRec(GetMousePosition(), angleField);
-			
-		}
-	}
+	void DrawVelocityInput();
+	void DrawAngleInput();
 	// Fire button
-	void DrawPlayButton()
-	{
-		Rectangle playButton = { uiPanel.x + 80, uiPanel.y + 150, 140, 40 };
-		if (GuiButton(playButton, "Launch Bullet")) {
-			userVelocity_ = atof(velocityInput);
-			userAngle_ = atof(angleInput);
-			fireRequested_ = true;
-		}
-	}
+	void DrawPlayButton();
 	//Speed button
-	void DrawTimeScaleToggle(float &timeScale)
-	{
-		Rectangle buttonNormalSpeed = { toolPanel.x, toolPanel.y + 20, 80, 30 };
-		const char* label = "Speed: Normal";
-
-		if (GuiButton(buttonNormalSpeed, label)) {
-			slowMotion = false;
-			timeScale = 1.0f;
-		}
-
-		Rectangle buttonSlowedSpeed(toolPanel.x -100, toolPanel.y + 20, 60, 30);
-		const char* slowLabel = "Speed Slow";
-		if (GuiButton(buttonSlowedSpeed, slowLabel))
-		{
-			slowMotion = true;
-			timeScale = 0.1f;
-		}
-
-		Rectangle buttonPauseSpeed(toolPanel.x-30 , toolPanel.y + 20, 20, 30);
-		const char* pauseLabel = "||";
-		if (GuiButton(buttonPauseSpeed, pauseLabel))
-		{
-			slowMotion = true;
-			timeScale = 0.0f;
-		}
-		
-	}
+	void DrawTimeScaleToggle(float& timeScale);
 	
-	void DrawObjectData(const RenderBullet & bullet) const
-	{
-		Rectangle horizontalData = { toolPanel.x -250, toolPanel.y + 5, 50, 20 };
-		//X:
-		DrawText("x: ", horizontalData.x - 20, horizontalData.y, 16, DARKGRAY);
-		DrawRectangle(horizontalData.x, horizontalData.y, horizontalData.width, horizontalData.height, LIGHTGRAY);
-		string xCoordinate = to_string(bullet.getPostition().x);
-		xCoordinate.resize(4);
-		const char *bufferX = xCoordinate.c_str();
-		DrawText(bufferX, horizontalData.x+5, horizontalData.y+4, 14, DARKGRAY);
-		
-		// Y: 
-		DrawText("y: ", horizontalData.x - 20, horizontalData.y+25, 16, GRAY);
-		DrawRectangle(horizontalData.x, horizontalData.y+25, horizontalData.width, horizontalData.height, LIGHTGRAY);
-		string yCoordinate = to_string(bullet.getPostition().y);
-		yCoordinate.resize(4);
-		const char* bufferY = yCoordinate.c_str();
-		DrawText(bufferY, horizontalData.x+5, horizontalData.y+29, 14, DARKGRAY);
-	}
-
-	bool getFireRequested()
-	{
-		return fireRequested_;
-	}
-	void setFireRequested(bool fireRequested)
-	{
-		fireRequested_ = fireRequested;
-	}
-	float getUserVelocity()
-	{
-		return userVelocity_;
-	}
-	float getUserAngle()
-	{
-		return userAngle_;
-	}
+	void DrawObjectData(const RenderBullet& bullet) const;
+	//getters
+	bool getFireRequested()const;
+	void setFireRequested(bool fireRequested);
+	float getUserVelocity()const;
+	float getUserAngle()const;
 };
 

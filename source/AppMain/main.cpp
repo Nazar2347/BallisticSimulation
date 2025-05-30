@@ -18,7 +18,7 @@ int main() {
 
     MainUI menu;
     
-    Bullet* bullet1 = new Bullet(500.0f, 45.0f, "Pistol_bullet");
+    Bullet* bullet1 = new Bullet(400.0f, 45.0f, "Pistol_bullet");
 
     RenderBullet rbullet1(bullet1);
 

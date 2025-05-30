@@ -39,5 +39,5 @@ target_include_directories(raygui INTERFACE
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib)
-target_link_libraries(${PROJECT_NAME} INTERFACE raygui)
+target_link_libraries(${PROJECT_NAME} PUBLIC raygui)
 target_link_libraries(${PROJECT_NAME} PUBLIC CoreLibrary)
