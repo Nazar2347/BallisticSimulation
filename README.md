@@ -1,2 +1,3 @@
 # BallisticSimulation
-Small project to test physics concepts in 2D space
+Small project to try  physics concepts in 2D space
+PLEASE DO NOT LOOK AT A CODE! IT`S SUCH A MESS RIGHT THERE!!! 
